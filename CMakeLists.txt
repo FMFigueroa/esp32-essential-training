@@ -4,5 +4,7 @@
 # CMakeLists in this exact order for cmake to work correctly
 cmake_minimum_required(VERSION 3.16)
 
+# Recuerda mantener el sentido del slash "/ " en el path.
+set(EXTRA_COMPONENT_DIRS C:/Users/Felix/esp_projects/esp32-god-level/calc )
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 project(esp32-god-level)
