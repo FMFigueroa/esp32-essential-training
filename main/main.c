@@ -1,6 +1,8 @@
 #include <stdio.h>
+#include "calc.h"
 
 void app_main(void)
 {
-    printf("Hello World\n");
+    int result = add(3, 5);
+    printf("result = %d\n", result);
 }
