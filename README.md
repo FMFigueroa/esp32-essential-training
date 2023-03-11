@@ -7,7 +7,7 @@ The content is separated and named for each branch, the main branch launches all
 │
 ├── CMakeLists.txt
 │
-├── components
+├── cal
 │   │── calc.c
 │   │── calc.h
 │   └── CMakeLists.txt    
