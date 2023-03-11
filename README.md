@@ -12,3 +12,8 @@ The content is separated and named for each branch, the main branch launches all
 ```
 Additionally, the sample project contains Makefile and component.mk files, used for the legacy Make based build system. 
 They are not used or needed when building with CMake and idf.py.
+
+start the debugger by using
+```
+openocd -f debug/ftdi ft2322.cfg -f debug\esp-wroom-32.cfg
+```
