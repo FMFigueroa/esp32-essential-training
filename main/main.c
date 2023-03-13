@@ -8,14 +8,14 @@ void sender(void *params) // char * params
 {
     while (1)
     {
-
-        xTaskNotify(myTask1Handler, (1 << 2), eSetValueWithoutOverwrite); //0001 << 2= 0100 = 4 (Shift Left)
+        /* Set bits in the task's notification value. */
+        xTaskNotify(myTask1Handler, (1 << 0), eSetBits); //0001 << 0 = 0001 = 1  (value = 1)
         vTaskDelay(1000 / portTICK_PERIOD_MS);
-        xTaskNotify(myTask1Handler, (1 | 4 ), eSetValueWithoutOverwrite); //0001 | 0100 = 0101 = 5 (OR)
+        xTaskNotify(myTask1Handler, (1 << 1), eSetBits); // 0001 << 1 = 0010 + value = (value = 3)
         vTaskDelay(1000 / portTICK_PERIOD_MS);
-        xTaskNotify(myTask1Handler, (12 >> 1), eSetValueWithoutOverwrite); //1100 >> 1= 0110 = 6 (Shift Right) 
+        xTaskNotify(myTask1Handler, (1 << 2), eSetBits); // 0001 << 2 = 0100 + value = (value = 7)
         vTaskDelay(1000 / portTICK_PERIOD_MS);
-        xTaskNotify(myTask1Handler, (15 & 7), eSetValueWithoutOverwrite); // 1111 & 0111 = 7 (AND)
+        xTaskNotify(myTask1Handler, (1 << 3), eSetBits); // 0001 << 3 = 1000 + value = (value = 15)
         vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 }
