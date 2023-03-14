@@ -9,14 +9,17 @@ void sender(void *params) // char * params
     while (1)
     {
         /* Set bits in the task's notification value. */
-        xTaskNotify(myTask1Handler, (1 << 0), eSetBits); //0001 << 0 = 0001 = 1  (value = 1)
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
-        xTaskNotify(myTask1Handler, (1 << 1), eSetBits); // 0001 << 1 = 0010 + value = (value = 3)
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
-        xTaskNotify(myTask1Handler, (1 << 2), eSetBits); // 0001 << 2 = 0100 + value = (value = 7)
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
-        xTaskNotify(myTask1Handler, (1 << 3), eSetBits); // 0001 << 3 = 1000 + value = (value = 15)
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
+        //Part 1
+        xTaskNotify(myTask1Handler, (1 << 0), eSetBits);
+        xTaskNotify(myTask1Handler, (1 << 1), eSetBits);
+        vTaskDelay(3000 / portTICK_PERIOD_MS);
+        // Part 2
+        xTaskNotify(myTask1Handler, (1 << 2), eSetBits); 
+        xTaskNotify(myTask1Handler, (1 << 3), eSetBits); 
+        vTaskDelay(500 / portTICK_PERIOD_MS);
+        // Part 3
+        xTaskNotify(myTask1Handler, (15 & 7), eSetBits);
+        vTaskDelay(3000 / portTICK_PERIOD_MS);
     }
 }
 void receiver(void *params) // char * params
@@ -24,7 +27,7 @@ void receiver(void *params) // char * params
     uint state; // uint32_t * pulNotificationValue
     while (1)
     {
-        xTaskNotifyWait(0, 0, &state, portMAX_DELAY);
+        xTaskNotifyWait(0xffffffff, 0, &state, portMAX_DELAY);
         printf("received state: %d  times\n", state);
     }
 }
