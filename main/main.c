@@ -5,53 +5,32 @@
 #include "freertos/task.h"
 #include "freertos/semphr.h"
 
-SemaphoreHandle_t mutexBus;
-// xSemaphoreHandle mutexBus;
+SemaphoreHandle_t binSemaphore;
+// xSemaphoreHandle binSemaphore;
 
-void writeToBus(char *message)
+void listenForHTTP(void *params)
 {
-    printf(message);
+    while (true)
+    {
+        printf("received http message\n");
+        xSemaphoreGive(binSemaphore);
+        printf("processed http message\n");
+        vTaskDelay(5000 / portTICK_PERIOD_MS);
+    }
 }
 
 void task1(void *params)
 {
     while (true)
     {
-        printf("reading temperature \n");
-        if (xSemaphoreTake(mutexBus, 1000 / portTICK_PERIOD_MS))
-        {
-            writeToBus("tempratrue is 25c\n");
-            xSemaphoreGive(mutexBus);
-        }
-        else
-        {
-            printf("writing temperature timed out \n");
-        }
-        vTaskDelay(5000 / portTICK_PERIOD_MS);
-    }
-}
-
-void task2(void *params)
-{
-    while (true)
-    {
-        printf("reading humidity\n");
-        if (xSemaphoreTake(mutexBus, 1000 / portTICK_PERIOD_MS))
-        {
-            writeToBus("humidity is 50 \n");
-            xSemaphoreGive(mutexBus);
-        }
-        else
-        {
-            printf("writing humidity timed out \n");
-        }
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
+        xSemaphoreTake(binSemaphore, portMAX_DELAY);
+        printf("doing something with http\n");
     }
 }
 
 void app_main(void)
 {
-    mutexBus = xSemaphoreCreateMutex();
-    xTaskCreate(&task1, "temperature reading", 2048, NULL, 2, NULL);
-    xTaskCreate(&task2, "humidity reading", 2048, NULL, 2, NULL);
+    binSemaphore = xSemaphoreCreateBinary();
+    xTaskCreate(&listenForHTTP, "get http", 2048, NULL, 2, NULL);
+    xTaskCreate(&task1, "do something with http", 2048, NULL, 1, NULL);
 }
