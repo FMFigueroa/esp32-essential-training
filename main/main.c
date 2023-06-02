@@ -1,6 +1,10 @@
 #include "sdkconfig.h"
 #include <stdio.h>
+#include <string.h>
+#include <stddef.h>
 #include "connect.h"
+#include "server.h"
+#include "toggleLed.h"
 #include "nvs_flash.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -22,23 +26,12 @@ void initialize_nvs(void)
 
 void wifi_connect(void *params)
 {
-    wifi_connect_ap("my-esp-ssid", "password");
-
     esp_err_t err = wifi_connect_sta(CONFIG_SSID, CONFIG_PASSWORD, 10000);
     if (err)
     {
         ESP_LOGE(TAG, "Failed to connect");
         vTaskDelete(NULL);
     }
-
-    // Disconnect Wifi
-    /*     for (size_t i = 5; i > 0; i--)
-        {
-            printf("disconnecting in %d\n", i);
-            vTaskDelay(pdMS_TO_TICKS(1000));
-        }
-        wifi_disconnect();
-    */
     vTaskDelete(NULL);
 }
 
@@ -46,5 +39,7 @@ void app_main(void)
 {
     initialize_nvs();
     wifi_init();
+    init_led();
     xTaskCreate(wifi_connect, "wifi_connect", 1024 * 5, NULL, 5, NULL);
+    init_Server_APIRest();
 }
