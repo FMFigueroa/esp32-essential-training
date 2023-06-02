@@ -1,0 +1,10 @@
+menu "WIFI"
+
+    config SSID
+        string "SSID"
+        default "My_WiFi"
+
+    config PASSWORD
+        string "PASSWORD"
+        default "12345"
+endmenu
