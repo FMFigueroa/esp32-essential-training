@@ -5,10 +5,12 @@
 #include "connect.h"
 #include "server.h"
 #include "toggleLed.h"
+#include "pushBtn.h"
 #include "nvs_flash.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "esp_log.h"
+
 
 static const char *TAG = "wifi_connect";
 
@@ -26,6 +28,14 @@ void initialize_nvs(void)
 
 void wifi_connect(void *params)
 {
+    /* wifi_connect_ap("my-esp-ssid", "password");
+    for (size_t i = 5; i > 0; i--)
+    {
+        printf("disconnecting ap %d\n", i);
+        vTaskDelay(pdMS_TO_TICKS(1000));
+    }
+    wifi_disconnect(); */
+
     esp_err_t err = wifi_connect_sta(CONFIG_SSID, CONFIG_PASSWORD, 10000);
     if (err)
     {
@@ -40,6 +50,7 @@ void app_main(void)
     initialize_nvs();
     wifi_init();
     init_led();
+    init_btn();
     xTaskCreate(wifi_connect, "wifi_connect", 1024 * 5, NULL, 5, NULL);
     init_Server_APIRest();
 }

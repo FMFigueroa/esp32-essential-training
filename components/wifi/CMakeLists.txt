@@ -3,6 +3,7 @@ idf_component_register(
             "connect.c"
             "server.c"
             "toggleLed.c"
+            "pushBtn.c"
         INCLUDE_DIRS 
             "."
         REQUIRES esp_wifi 

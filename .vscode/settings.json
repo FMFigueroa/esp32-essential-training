@@ -18,19 +18,6 @@
   "idf.flashType": "UART",
   "files.associations": {
     "*.rs": "rust",
-    "functional": "c",
-    "esp_log.h": "c",
-    "event_groups.h": "c",
-    "nvs_flash.h": "c",
-    "esp_event.h": "c",
-    "timers.h": "c",
-    "sdkconfig.h": "c",
-    "esp_netif.h": "c",
-    "task.h": "c",
-    "gpio.h": "c",
-    "connect.h": "c",
-    "freertos.h": "c",
-    "esp_wifi.h": "c",
-    "stdio.h": "c"
+    "app.h": "c"
   }
 }

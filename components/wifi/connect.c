@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "driver/gpio.h"
+//#include "driver/gpio.h"
 #include "esp_netif.h"
 #include "esp_wifi.h"
 #include "esp_log.h"
@@ -8,8 +8,8 @@
 #include "freertos/task.h"
 #include "freertos/event_groups.h"
 
-#define PIN 2
-static int isOn = 0;
+//#define PIN 2
+//static int isOn = 0;
 
 static const char *TAG = "WIFI";
 esp_netif_t *esp_netif;
@@ -100,8 +100,8 @@ void event_handler(void *event_handler_arg, esp_event_base_t event_base, int32_t
         break;
     case WIFI_EVENT_STA_CONNECTED:
         ESP_LOGI(TAG, "connected");
-        isOn = !isOn;
-        gpio_set_level(PIN, isOn);
+        //isOn = !isOn;
+        //gpio_set_level(PIN, isOn);
         break;
     case WIFI_EVENT_STA_DISCONNECTED:
     {
@@ -111,16 +111,16 @@ void event_handler(void *event_handler_arg, esp_event_base_t event_base, int32_t
             // WIFI_REASON_ASSOC_LEAVE
             ESP_LOGI(TAG, "disconnected");
             xEventGroupSetBits(wifi_events, DISCONNECTED);
-            isOn = !isOn;
-            gpio_set_level(PIN, isOn);
+            //isOn = !isOn;
+            //gpio_set_level(PIN, isOn);
             break;
         }
         const char *err = get_error(wifi_event_sta_disconnected->reason);
         ESP_LOGE(TAG, "disconnected: %s", err);
         esp_wifi_connect();
         xEventGroupSetBits(wifi_events, DISCONNECTED);
-        isOn = !isOn;
-        gpio_set_level(PIN, isOn);
+        //isOn = !isOn;
+        //gpio_set_level(PIN, isOn);
     }
     break;
     case IP_EVENT_STA_GOT_IP:
@@ -129,13 +129,13 @@ void event_handler(void *event_handler_arg, esp_event_base_t event_base, int32_t
         break;
     case WIFI_EVENT_AP_START:
         ESP_LOGI(TAG, "AP started");
-        isOn = !isOn;
-        gpio_set_level(PIN, isOn);
+        //isOn = !isOn;
+        //gpio_set_level(PIN, isOn);
         break;
     case WIFI_EVENT_AP_STOP:
         ESP_LOGI(TAG, "AP stopped");
-        isOn = !isOn;
-        gpio_set_level(PIN, isOn);
+        //isOn = !isOn;
+        //gpio_set_level(PIN, isOn);
         break;
     default:
         break;
@@ -151,8 +151,8 @@ void wifi_init(void)
     ESP_ERROR_CHECK(esp_event_handler_register(WIFI_EVENT, ESP_EVENT_ANY_ID, event_handler, NULL));
     ESP_ERROR_CHECK(esp_event_handler_register(IP_EVENT, IP_EVENT_STA_GOT_IP, event_handler, NULL));
     ESP_ERROR_CHECK(esp_wifi_set_storage(WIFI_STORAGE_RAM));
-    esp_rom_gpio_pad_select_gpio(PIN);
-    ESP_ERROR_CHECK(gpio_set_direction(PIN, GPIO_MODE_OUTPUT));
+    //esp_rom_gpio_pad_select_gpio(PIN);
+    //ESP_ERROR_CHECK(gpio_set_direction(PIN, GPIO_MODE_OUTPUT));
 }
 
 esp_err_t wifi_connect_sta(const char *ssid, const char *pass, int timeout)
