@@ -1,4 +1,4 @@
-# ESP32 God Level
+# ESP32 Essential Training
 
 <p align="center">
 <img  src="https://res.cloudinary.com/rustlatamgroup/image/upload/v1685737299/FreeRTOS/ESP-IDF_Essential_Training_zvyfcn.png">
