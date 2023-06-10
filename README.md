@@ -1,6 +1,6 @@
 # ESP32 Essential Training
 
-<p align="center">
+<p align="start">
 <img  src="https://res.cloudinary.com/rustlatamgroup/image/upload/v1685737299/FreeRTOS/ESP-IDF_Essential_Training_zvyfcn.png">
 </p>
 
